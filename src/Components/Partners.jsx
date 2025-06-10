@@ -1,13 +1,13 @@
+import logo1 from "../assets/19.png"
+import logo2 from "../assets/17.png"
+import logo3 from "../assets/18.png"
+import logo4 from "../assets/20.png"
+import logo5 from "../assets/21.png" 
 
 function Partners() {
     
     const logos = [
-       '/src/assets/19.png',
-        '/src/assets/17.png',
-        '/src/assets/18.png',
-        '/src/assets/20.png',
-        '/src/assets/21.png',
-      ];
+       logo1,logo2,logo3,logo4,logo5];
 
     return(
         <>
