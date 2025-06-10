@@ -8,24 +8,23 @@ import {
 import { createContext, useState, useEffect, useContext } from "react";
 
 import Home from "./Pages/Home.jsx";
-import InnerCourse from "./Pages/InnerCourse.jsx";
+// import InnerCourse from "./Pages/InnerCourse.jsx";
 
-import Login from "./Pages/Login.jsx";
-import MainLayout from "./Components/MainLayout.jsx";
-import Courses from "./Pages/Courses.jsx";
-import BlogPage from "./Pages/BlogPage.jsx";
+// import Login from "./Pages/Login.jsx";
+// import MainLayout from "./Components/MainLayout.jsx";
+
 import Register from "./Pages/Register.jsx";
-import Quiz from "./Components/Quiz.jsx";
-import CourseContent from "./Pages/CourseContent.jsx";
-import CourseVideo from "./Pages/CourseVideo.jsx";
+
+// import CourseContent from "./Pages/CourseContent.jsx";
+// import CourseVideo from "./Pages/CourseVideo.jsx";
 import Header1 from "./Components/Header1.jsx";
-import ScrollToTop from "./Components/ScrolllToTop.js";
-import CertificatePage from "./Pages/Certificate.jsx";
-import CertificateDownload from "./Pages/CertificateDownload.jsx";
-import SuperLogin from "./Pages/SuperLogin.jsx"
-import StudentDashboard from "./Pages/StudentDashboard.jsx";
+
+
+
+// import SuperLogin from "./Pages/SuperLogin.jsx"
+// import StudentDashboard from "./Pages/StudentDashboard.jsx";
 import axios from "axios";
-import Teacherdashboard from "./Pages/Teacherdashboard.jsx";
+
 
 
 
@@ -45,7 +44,7 @@ function App() {
   const [login, setLogin] = useState(false);
   const [userName, setUserName] = useState("");
   const [Course, setCourse] = useState([]);
-  const [timerExpired, setTimerExpired] = useState(false);
+  // const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
     axios
@@ -72,17 +71,17 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!login) {
-      const timer = setTimeout(() => {
-        setTimerExpired(true);
-      }, 60000); // 1 minute timer
+  // useEffect(() => {
+  //   if (!login) {
+  //     const timer = setTimeout(() => {
+  //       setTimerExpired(true);
+  //     }, 60000); // 1 minute timer
 
-      return () => clearTimeout(timer);
-    } else {
-      setTimerExpired(false);
-    }
-  }, [login]);
+  //     return () => clearTimeout(timer);
+  //   } else {
+  //     setTimerExpired(false);
+  //   }
+  // }, [login]);
 
 
   return (
@@ -93,12 +92,7 @@ function App() {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
-              <Route path="/course" element={<Courses />} />
-              <Route path="/quiz/:id" element={<Quiz />} />
-              <Route path="/course-content" element={<CourseContent />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/certificate" element={<CertificatePage />} />
-              <Route path="/certificate-download" element={<CertificateDownload />} />
+          
               {/* <Route
                 path="/student_dashboard"
                 // element={
@@ -112,13 +106,13 @@ function App() {
             </Route>
 
             {/* No layout routes */}
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/course/:id" element={<InnerCourse />} />
             <Route path="/course-video/:id" element={<CourseVideo />} />
             <Route path="/slogin" element={<SuperLogin />} />
             <Route path="/stu" element={<StudentDashboard/>}></Route>
-            <Route path="/tea" element={<Teacherdashboard/>}></Route>
+             */}
             <Route path="/cur" element={<CourseContent/>}></Route>
            
             
