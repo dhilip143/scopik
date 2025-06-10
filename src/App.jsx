@@ -11,11 +11,10 @@ import Home from "./Pages/Home.jsx";
 // import InnerCourse from "./Pages/InnerCourse.jsx";
 
 // import Login from "./Pages/Login.jsx";
-// import MainLayout from "./Components/MainLayout.jsx";
+import MainLayout from "./Components/MainLayout.jsx";
 
 import Register from "./Pages/Register.jsx";
-
-// import CourseContent from "./Pages/CourseContent.jsx";
+import CourseContent from "./Pages/CourseContent.jsx";
 // import CourseVideo from "./Pages/CourseVideo.jsx";
 import Header1 from "./Components/Header1.jsx";
 
@@ -88,7 +87,7 @@ function App() {
     <loginContext.Provider value={{ login, setLogin, userName, setUserName }}>
       <CourseContext.Provider value={{ Course, setCourse }}>
         <BrowserRouter>
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />

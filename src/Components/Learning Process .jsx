@@ -10,7 +10,7 @@ function LearningProcess() {
             style={{ backgroundImage: `url(${learn})` }}
         >
             <div className="text-[46px] font-medium mb-10 font-news">
-            <spam className=" text-[#FFFFFF] ">Learning</spam> <spam className="text-[#F97316]">Process</spam>
+            <span className=" text-[#FFFFFF] ">Learning</span> <spam className="text-[#F97316]">Process</spam>
             </div>
             <div className="flex items-start justify-center gap-16">
                 <div className="flex flex-col items-center text-center max-w-xs">
