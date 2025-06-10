@@ -8,13 +8,13 @@ function WhatWeHave() {
     return (
       <div className="p-6">
         <div className="my-8 font-inter size-18px  text-sm">
-          <h3 className="text-[#004E8F] font-news text-3xl mb-4">What You'll Learn</h3>
-          <p className="text-[#020202] font-Inter text-lg">
+          <h3 className="text-[#004E8F] font-news text-3xl mx-5 mb-4">What You'll Learn</h3>
+          <p className="text-[#020202] font-Inter mx-5 max-w-3xl text-lg">
            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia atque, eius earum recusandae sed facilis voluptatem magni excepturi minus quam!
           </p>
         </div>
   
-        <div className="flex flex-wrap items-center justify-evenly gap-5 text-center">
+        <div className="flex flex-wrap items-center justify-evenly gap-5 text-center max-w-4xl">
           <div>
             <img src={img1} alt="Students" className="mx-auto mb-2" />
             <h3 className="text-xl font-semibold">12,836</h3>

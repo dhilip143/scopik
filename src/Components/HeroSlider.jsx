@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import slider1 from "/src/assets/Rectangle 2138.jpg";
-import slider2 from "/src/assets/Frame 1597881187.jpg";
+import slider1 from'../assets/header1.jpg'
+import slider2 from'../assets/header2.jpg'
+import slider3 from'../assets/header3.jpg'
 
 const slides = [
   {
@@ -11,12 +12,12 @@ const slides = [
   {
     id: 2,
     image: slider2,
-    title: "VR EXPERIENCE",
+    title: "VIRTUAL REALITY",
   },
   {
     id: 3,
-    image: slider1,
-    title: "NEXT LEVEL TECH",
+    image: slider3,
+    title: "3D MODELING ",
   },
 ];
 
@@ -31,7 +32,7 @@ const HeroSlider = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[80vh] xl:h-[80vh]  rounded-3xl mx-auto max-w-[95%] mt-6">
+    <div className="relative w-full h-[80vh] xl:h-[95vh] mx-auto max-w-full">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -42,13 +43,28 @@ const HeroSlider = () => {
           <img
             src={slide.image}
             alt={slide.title}
-            className="w-full h-full object-cover rounded-3xl"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/30 flex items-end justify-center rounded-3xl">
-            <h2 className="text-white text-6xl md:text-8xl xl:text-9xl mb-24 font-extralight tracking-wider">
-              {slide.title}
-            </h2>
-          </div>
+          <div
+        
+             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-end justify-center rounded-3xl "
+            // style={{ backgroundImage: `url(${whiteBg})` }}
+          >
+            <div className="relative bg-white bg-opacity-75 p-8 md:p-12 rounded-lg shadow-md w-full max-w-4xl border-l-8 border-r-8 border-[#161651] text-center overflow-hidden ">
+              <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold font-[Newsreader] text-[#161651] mb-4">
+                Welcome to Scopik Learning
+              </h1>
+              <p className="text-gray-800 text-xl mb-6">
+            Scopik Learning presents curated online courses that combine
+                faculty and disciplines from across the University, connecting
+                learners around the globe with the world's most urgent issues.
+              </p>
+             <button className="bg-[#161651] text-white px-6 py-2 rounded-md hover:bg-blue-900 transition">
+               LEARN MORE
+              </button>
+             {/* Bottom blend */}
+            </div>
+          </div>{" "}
         </div>
       ))}
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginImage from "/src/assets/Login/loginIlustrator.png";
 import loginBg from "/src/assets/Login/loginBg.jpg";
+import { loginContext } from "../App";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const Login = () => {
   const [role, setRole] = useState("student");
   const [activeTab, setActiveTab] = useState("student");
   const navigate = useNavigate();
+  const { setLogin, setUserName } = useContext(loginContext);
 
   async function handleLogin() {
     if (!email || !password) {
@@ -22,7 +24,8 @@ const Login = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, user_type: role }),
-      });
+      }
+    );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -32,6 +35,14 @@ const Login = () => {
 
       const data = await response.json();
       setErrorMsg("Login Successful");
+      console.log(email,password);
+      localStorage.setItem("access_token", data.access);
+      localStorage.setItem("refresh_token", data.refresh);
+      setLogin(true);
+      if (data.user && data.user.name) {
+        setUserName(data.user.name);
+        localStorage.setItem("userName", data.user.name);
+      }
       // Redirect to home page regardless of role
       navigate("/");
     } catch (err) {

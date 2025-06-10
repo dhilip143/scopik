@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useRef, useEffect } from "react";
+
 
 const syllabusList = [
   {
@@ -42,13 +44,14 @@ const syllabusList = [
 
 function Syllabus() {
   const [openIndex, setOpenIndex] = useState(null);
+  
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <div className="p-10 mt-2 bg-[#F6FBFE] w-full">
+    <div className="p-10 mt-2 bg-[#F6FBFE] w-full max-w-4xl">
       <div className="mt-4 space-y-4">
         <h2 className="text-2xl font-bold">
           Course <span className="text-indigo-600">Modules</span>
@@ -77,7 +80,7 @@ function Syllabus() {
                       to={
                         section.type === "quiz"
                           ? `/quiz/${section.id}`
-                          : `/video/`
+                          : /video/
                       }
                       className="text-blue-600 hover:underline"
                     >

@@ -2,7 +2,9 @@
 import React from "react";
 import icon from "/src/assets/Quote Icon.png";
 import student from "/src/assets/Ellipse 1467.png";
-import homeWorld from "/src/assets/homeWorld.jpg"
+// import homeWorld from "/src/map1.png"
+import homeWorld from "/src/assets/map1.png";
+
 
 const testimonials = [
   {
@@ -63,8 +65,8 @@ const TestimonialCarousel = () => {
     <div className="overflow-x-hidden py-8 h-[550px]" style={{ backgroundImage: `url(${homeWorld})` }}>
 
       <div className="text-center">
-        <h1 className="text-2xl sm:text-3xl font-[newsreader] text-[#00005C] p-2">
-          What our <span className="text-indigo-600 font-bold">Students</span>{" "}
+        <h1 className="text-2xl sm:text-3xl font-[newsreader] text-[#FFFFFF] p-2">
+          What our <span className="text-[#FF8922] font-bold">Students</span>{" "}
           Say!
         </h1>
       </div>
@@ -83,18 +85,18 @@ const TestimonialCarousel = () => {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="w-full lg:w-40 flex-shrink-0 px-4 sm:px-8 text-center box-border text-wrap bg-white shadow-lg "
+              className="w-full lg:w-40 flex-shrink-0 px-4 sm:px-8 text-center box-border text-wrap bg-[#000060] shadow-lg "
               style={{ minWidth: "40%" }}
             >
               <img src={icon} alt="Qutation" className="mt-5 size-12" />
-              <p className="italic text-gray-600 text-justify text-sm sm:text-lg max-w-2xl my-4 ">
+              <p className="italic text-[#F4F4F4] text-justify text-sm sm:text-lg max-w-2xl my-4 ">
                 {t.text}
               </p>
               <div className="flex justify-start items-center gap-5 mb-5">
                 <img src={student} alt="" className="size-12" />
                 <div className="flex flex-col items-start ">
-                  <h1 className="text-lg font-bold">{t.name}</h1>
-                  <p className="text-sm font-light pl-1">{t.course}</p>
+                  <h1 className="text-lg font-bold text-[#F4F4F4]">{t.name}</h1>
+                  <p className="text-sm font-light pl-1 text-[#F4F4F4]">{t.course}</p>
                 </div>
               </div>
             </div>

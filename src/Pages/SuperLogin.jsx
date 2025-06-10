@@ -10,7 +10,7 @@ function SuperLogin()
     const navigate=useNavigate()
 
     const uname="scopikadmin@gmail.com"
-    const adpass="scopik@eduteck25"
+    const adpass="6463"
 
     function checkLogin()
     {

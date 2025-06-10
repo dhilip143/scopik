@@ -1,14 +1,13 @@
 // src/Layouts/MainLayout.jsx
-import Header from "../Components/Header";
+import Header1 from "../Components/Header1";
 import Footer from "../Components/Footer";
 import { Outlet } from "react-router-dom";
-// import Header1 from "./Header1";
 
 
 const MainLayout = () => {
   return (
     <>
-      <Header/>
+      <Header1/>
       <Outlet />
       <Footer />
     </>

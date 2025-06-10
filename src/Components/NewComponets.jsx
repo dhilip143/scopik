@@ -1,8 +1,9 @@
-import { Courses } from "../Pages/Courses";
 import timer from "../assets/timer.png";
 import star from "../assets/star.png";
-
+import { useContext } from "react";
+import { CourseContext } from "../App";
 function NewCourseCard() {
+  const {Courses}=useContext(CourseContext)
   const first = Courses.slice(0, 3);
 
   return (

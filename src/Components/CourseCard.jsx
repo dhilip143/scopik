@@ -1,11 +1,22 @@
-// src/Components/CourseCard.jsx
-
-import { Courses } from "../Pages/Courses";
 import timer from "../assets/timer.png";
 import star from "../assets/star.png";
+import { CourseContext, loginContext } from "../App";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CourseCard() {
-  const first = Courses.slice(0, 3);
+  const { Course } = useContext(CourseContext);
+  const { login } = useContext(loginContext);
+  const first = Course.slice(0, 3);
+  const navigate = useNavigate();
+
+  const handleEnrollClick = () => {
+    if (!login) {
+      navigate("/login");
+    } else {
+      navigate("/course")
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-5 z-50">
@@ -26,7 +37,7 @@ function CourseCard() {
             <div className="absolute bottom-0 w-full bg-white transition-all duration-500 h-[200px] group-hover:h-[240px] z-10 rounded-t-lg px-5 py-4 overflow-hidden">
               <div className="transition-all duration-500 group-hover:-translate-y-2">
                 <h1 className="text-xl font-semibold text-[#2d1d7b] mb-2">
-                  {course.title}
+                  {course.name}
                 </h1>
 
                 <div className="flex justify-between items-center mb-2">
@@ -45,7 +56,10 @@ function CourseCard() {
                 </p>
               </div>
 
-              <button className="w-full mt-4 bg-[#4c33f0] hover:bg-[#3724c0] text-white rounded-full py-2 opacity-0 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+              <button
+                onClick={handleEnrollClick}
+                className="w-full mt-4 bg-[#4c33f0] hover:bg-[#3724c0] text-white rounded-full py-2 opacity-100 translate-y-0 transition-all duration-300"
+              >
                 Enroll Now
               </button>
             </div>

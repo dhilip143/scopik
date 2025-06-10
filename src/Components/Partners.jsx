@@ -2,7 +2,7 @@
 function Partners() {
     
     const logos = [
-        '/src/assets/19.png',
+       '/src/assets/19.png',
         '/src/assets/17.png',
         '/src/assets/18.png',
         '/src/assets/20.png',
@@ -12,9 +12,9 @@ function Partners() {
     return(
         <>
 
-    <div className="flex flex-col justify-center items-center bg-white">
-    <div className="text-center text-[#00005C] pt-10 text-3xl font-[newsreader]">Our Partners</div>
-      <div className="w-4/5 overflow-hidden relative mt-10 mb-10">
+    <div className="flex flex-col justify-center items-center bg-[#E6E6E6]">
+    <div className="text-center text-[#000000] pt-10 text-3xl font-[newsreader]">Our Partners</div>
+      <div className="w-4/5 overflow-hidden relative  mb-10">
         <div
           className="flex animate-scroll whitespace-nowrap "
           onMouseEnter={(e) => (e.currentTarget.style.animationPlayState = 'paused')}

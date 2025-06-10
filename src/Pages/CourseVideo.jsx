@@ -1,89 +1,8 @@
-// import React, { useState } from "react";
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { Courses } from "./Courses";
-import Course from "./InnerCourse";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import VideoPlayer from "/src/Components/VideoPlayer.jsx";
-
-const courseData = [
-  {
-    section: "Getting Started",
-    videos: [
-      {
-        title: "Intro to Webflow Tutorial training course",
-        url: "https://www.youtube.com/embed/qcQKq4XABNk?si=Rbp7jtnZfpf0dOIK&amp",
-      },
-      {
-        title: "Getting started with Webflow tutorial",
-        url: "https://www.youtube.com/embed/3t4kTLLn1R4",
-      },
-      {
-        title: "What is Webflow",
-        url: "https://www.youtube.com/embed/hx1eJ7w6F3k",
-      },
-      {
-        title: "Webflow FAQs – How much is webflow",
-        url: "https://www.youtube.com/embed/mhFxrGHaU0w",
-      },
-      {
-        title: "How to build your first website in webflow",
-        url: "https://www.youtube.com/embed/qJ6IZ1Dyomk",
-      },
-    ],
-  },
-  {
-    section: "The Brief",
-    videos: [
-      {
-        title: "Project Overview",
-        url: "https://www.youtube.com/embed/XtL7pQEvM6k",
-      },
-      {
-        title: "Client Needs",
-        url: "https://www.youtube.com/embed/92liTp1K-7U",
-      },
-    ],
-  },
-  {
-    section: "Buttons & Navigation – Level 1",
-    videos: [
-      {
-        title: "Intro to Buttons",
-        url: "https://www.youtube.com/embed/9Hy4sS5Vv0k",
-      },
-      {
-        title: "Creating Navigation Menus",
-        url: "https://www.youtube.com/embed/HkzMA1U7RdU",
-      },
-      {
-        title: "Styling Navigation",
-        url: "https://www.youtube.com/embed/JvZ7GmNSzHg",
-      },
-      {
-        title: "Responsive Navbars",
-        url: "https://www.youtube.com/embed/1WvGZPd4I98",
-      },
-    ],
-  },
-  {
-    section: "Responsive Design",
-    videos: [
-      {
-        title: "Understanding Breakpoints",
-        url: "https://www.youtube.com/embed/B2eYyUO0YmM",
-      },
-      {
-        title: "Making Layouts Responsive",
-        url: "https://www.youtube.com/embed/T20UgJCsFqo",
-      },
-      {
-        title: "Testing Responsiveness",
-        url: "https://www.youtube.com/embed/bYo2z_NcB_g",
-      },
-    ],
-  },
-];
+import { CourseContext } from "../App";
+import axios from "axios";
 
 const quizData = [
   {
@@ -110,15 +29,12 @@ const quizData = [
 
 export default function CourseVideo() {
   const { id } = useParams();
-  const videoCourse = Courses.find((course) => course.id === parseInt(id));
-  const [currentVideo, setCurrentVideo] = useState({
-    ...courseData[0].videos[0],
-    section: courseData[0].section,
-  });
+  const { Course } = useContext(CourseContext);
+  const videoCourse = Course.find((course) => course.id === parseInt(id));
+  const [courseData, setCourseData] = useState([]);
+  const [currentVideo, setCurrentVideo] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [unlockedVideos, setUnlockedVideos] = useState([
-    `${courseData[0].section}_0`,
-  ]);
+  const [unlockedVideos, setUnlockedVideos] = useState([]);
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
@@ -127,6 +43,32 @@ export default function CourseVideo() {
   const [watchedPercent, setWatchedPercent] = useState(0);
   const [validated, setValidated] = useState(false);
   const playerRef = useRef(null);
+
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api/course/${id}/`)
+      .then((res) => {
+        const course = res.data;
+        const formattedChapters = course.chapters.map((chapter) => ({
+          section: chapter.title,
+          videos: chapter.videos.map((video) => ({
+            title: video.video_name,
+            url: video.video,
+          })),
+        }));
+        setCourseData(formattedChapters);
+        if (formattedChapters.length && formattedChapters[0].videos.length) {
+          setCurrentVideo({
+            ...formattedChapters[0].videos[0],
+            section: formattedChapters[0].section,
+          });
+          setUnlockedVideos([`${formattedChapters[0].section}_0`]);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch course data:", error);
+      });
+  }, [id]);
 
   const handleOptionClick = (option) => setSelected(option);
 
@@ -168,16 +110,18 @@ export default function CourseVideo() {
   };
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  const goHome = () => navigate(`/course/${videoCourse.id}`);
-
+  const goHome = () => navigate(`/course/${videoCourse?.id || ""}`);
   const handleProgress = ({ played }) => {
     const percent = Math.floor(played * 100);
     setWatchedPercent(percent);
     if (!validated && percent >= 90) setValidated(true);
   };
 
+  if (!currentVideo) return <div>Loading...</div>;
+
   return (
     <div className="flex flex-col">
+      {/* Top Bar */}
       <div className="flex items-center justify-between bg-[#1A3B7E] text-white px-4 py-2 shadow-md z-50">
         <button
           onClick={toggleSidebar}
@@ -186,7 +130,7 @@ export default function CourseVideo() {
           &lt;
         </button>
         <div className="flex-grow text-center font-semibold">
-          {videoCourse.title}
+          {videoCourse?.name}
         </div>
         <button
           onClick={goHome}
@@ -196,9 +140,9 @@ export default function CourseVideo() {
         </button>
       </div>
 
+      {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-
         <div
           className={`transition-all duration-300 ease-in-out h-screen overflow-y-auto ${
             sidebarOpen ? "w-96 p-4" : "w-0 p-0 opacity-0 pointer-events-none"
@@ -207,13 +151,8 @@ export default function CourseVideo() {
           <h2 className="text-xl font-semibold mb-4">Course Content</h2>
           {courseData.map((section, sIdx) => {
             const isOpen = section.section === currentVideo?.section;
-
             return (
-              <div
-                key={sIdx}
-                className="mb-2 border rounded-lg overflow-hidden"
-              >
-                {/* Section header (accordion toggle) */}
+              <div key={sIdx} className="mb-2 border rounded-lg overflow-hidden">
                 <button
                   className={`w-full text-left px-4 py-3 font-semibold flex justify-between items-center ${
                     isOpen
@@ -222,10 +161,7 @@ export default function CourseVideo() {
                   }`}
                   onClick={() => {
                     const firstVideoKey = `${section.section}_0`;
-                    const isFirstVideoUnlocked =
-                      unlockedVideos.includes(firstVideoKey);
-
-                    if (isFirstVideoUnlocked) {
+                    if (unlockedVideos.includes(firstVideoKey)) {
                       setCurrentVideo({
                         ...section.videos[0],
                         section: section.section,
@@ -239,13 +175,11 @@ export default function CourseVideo() {
                   </span>
                 </button>
 
-                {/* Video list */}
                 {isOpen && (
                   <div className="bg-white">
                     {section.videos.map((video, vIdx) => {
                       const videoKey = `${section.section}_${vIdx}`;
                       const isUnlocked = unlockedVideos.includes(videoKey);
-
                       return (
                         <div
                           key={vIdx}
@@ -285,6 +219,7 @@ export default function CourseVideo() {
           })}
         </div>
 
+        {/* Main Video & Quiz */}
         <div className="flex-1">
           <div className="h-[650px] bg-black flex items-center justify-center">
             <VideoPlayer
@@ -296,40 +231,52 @@ export default function CourseVideo() {
               onProgress={handleProgress}
             />
           </div>
-
           <div className="text-right text-xs pr-4 pt-1 text-gray-400">
             Watched: {watchedPercent}%{" "}
             {validated && <span className="text-green-500">(Validated)</span>}
           </div>
 
+          {/* Quiz Section */}
           <div className="p-6 mx-auto mt-6 bg-white rounded-xl shadow-md space-y-6">
-            {showResult ? (
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold text-green-600">
-                  Quiz Completed!
-                </h2>
-                <p className="text-lg text-gray-700 mt-2">
-                  Your Score: <span className="font-bold">{score}</span> /{" "}
-                  {quizData.length}
-                </p>
-                {score === quizData.length && (
+          {showResult ? (
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold text-green-600">
+                Quiz Completed!
+              </h2>
+              <p className="text-lg text-gray-700 mt-2">
+                Your Score:{" "}
+                <span className="font-bold">
+                  {score}
+                </span>{" "}
+                / {quizData.length}
+              </p>
+              {score === quizData.length ? (
+                <>
                   <button
                     onClick={goToNextVideo}
                     className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                   >
                     Go to Next Video
                   </button>
-                )}
-                {score !== quizData.length && (
-                  <button
-                    onClick={restartQuiz}
-                    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Restart Quiz
-                  </button>
-                )}
-              </div>
-            ) : (
+                  {unlockedVideos.length === courseData.reduce((acc, section) => acc + section.videos.length, 0) && (
+                    <button
+                      onClick={() => navigate('/certificate-download', { state: { studentId: localStorage.getItem('studentId'), courseId: videoCourse?.id } })}
+                      className="mt-4 ml-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+                    >
+                      Get Certificate
+                    </button>
+                  )}
+                </>
+              ) : (
+                <button
+                  onClick={restartQuiz}
+                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Restart Quiz
+                </button>
+              )}
+            </div>
+          ) : (
               <>
                 <h3 className="text-xl font-semibold text-blue-800">
                   Question {current + 1} of {quizData.length}
