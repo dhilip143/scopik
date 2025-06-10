@@ -22,8 +22,7 @@ import Header1 from "./Components/Header1.jsx";
 import ScrollToTop from "./Components/ScrolllToTop.js";
 import CertificatePage from "./Pages/Certificate.jsx";
 import CertificateDownload from "./Pages/CertificateDownload.jsx";
-import SuperLogin from "./Pages/SuperLogin.jsx";
-import Superadmin from "./Components/superadmin.jsx";
+import SuperLogin from "./Pages/SuperLogin.jsx"
 import StudentDashboard from "./Pages/StudentDashboard.jsx";
 import axios from "axios";
 import Teacherdashboard from "./Pages/Teacherdashboard.jsx";
@@ -118,7 +117,6 @@ function App() {
             <Route path="/course/:id" element={<InnerCourse />} />
             <Route path="/course-video/:id" element={<CourseVideo />} />
             <Route path="/slogin" element={<SuperLogin />} />
-            <Route path="/sadmin" element={<Superadmin />} />
             <Route path="/stu" element={<StudentDashboard/>}></Route>
             <Route path="/tea" element={<Teacherdashboard/>}></Route>
             <Route path="/cur" element={<CourseContent/>}></Route>
